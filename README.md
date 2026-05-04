@@ -10,7 +10,7 @@ Slime Shell // Web (V3.0) é a evolução definitiva do ecossistema Slime Shell.
 
 ## 📸 Screenshot (Página Inicial)
 
-![Menu](https://github.com/MWkass/Slime_Shell_Web/blob/main/pagina-inicial.png)
+![Menu](https://github.com/MWkass/Slime_Shell_Web/blob/main/pagina_inicial.png)
 
 ---
 
