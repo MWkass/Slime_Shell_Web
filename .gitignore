@@ -1,0 +1,64 @@
+# ==========================================
+# FRONTEND (React / Vite)
+# ==========================================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependências e Build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# ==========================================
+# BACKEND (Python / FastAPI)
+# ==========================================
+# Ambientes Virtuais
+slime_web_virtual/
+venv/
+env/
+.venv/
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos Temporários de Mídia
+backend/screenshots/
+temp_chapters.txt
+temp_input.conf
+
+# ==========================================
+# DADOS E BANCO LOCAL (Persistência)
+# ==========================================
+historico.json
+notificacoes.json
+cache_animes.json
+
+# ==========================================
+# SEGURANÇA E VARIÁVEIS DE AMBIENTE
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# CONFIGURAÇÕES DE EDITOR E SO
+# ==========================================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+sync_git.sh
