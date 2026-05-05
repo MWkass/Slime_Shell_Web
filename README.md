@@ -1,5 +1,14 @@
 # Slime Shell // Web
 
+<div>
+  <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python" />
+  <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
+</div>
+<br>
+
 Slime Shell // Web (V3.0) é a evolução definitiva do ecossistema Slime Shell. Agora com uma arquitetura separada em Backend Assíncrono (FastAPI) e Frontend Reativo (React), o sistema atua como um orquestrador definitivo para busca, extração e reprodução de animes. Ele utiliza técnicas avançadas de bypass de segurança (Cloudflare) e injeta conteúdo diretamente em um reprodutor de alto desempenho (mpv) com suporte a upscaling de hardware via Vulkan e Anime4K.
 
 > **Status do Projeto:** Estável (V3.0)  
@@ -69,97 +78,90 @@ echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] http
 sudo apt update && sudo apt install brave-browser -y
 ```
 
-### 2. Clonagem e Ambiente Python
-Recomenda-se o uso de um ambiente virtual para manter as dependências isoladas.
+### 2. Configuração do Backend (Python/FastAPI)
 
 ```bash
-# Clone o repositório
 git clone https://github.com/MWkass/Slime_Shell_Web.git
 cd Slime_Shell_Web
 
-# Crie e ative o ambiente virtual
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Instalação de Dependências Python
-Instale as bibliotecas necessárias:
-
-```bash
+# Configuração do ambiente virtual e dependências
+python3 -m venv slime_web_virtual
+source slime_web_virtual/bin/activate
 pip install -r requirements.txt
-```
 
-### 4. Configuração do Backend (Python/FastAPI)
-Abra um terminal na raiz do projeto para configurar o motor de extração.
-
-```bash
-# Entre na pasta backend com o ambiente virtual ATIVADO
-cd Slime_Shell_Web/backend
-
-# Configure as variáveis de ambiente (.env)
+# Configuração de variáveis de ambiente
+cd backend
 echo "IMGBB_API_KEY=sua_chave_aqui" > .env
 echo "PASTA_SCREENSHOTS=./screenshots" > .env
 ```
 
-### 5. Configuração do Frontend (Node/React)
-No terminal entre na pasta frontend
+### 3. Configuração do Frontend (Node/React)
+**Requisito Importante:** Requer Node.js versão **20.19+** ou **22.12+**.
 
 ```bash
-# Entre na pasta frontend com o ambiente virtual DESATIVADO
-cd Slime_Shell_Web/frontend
+# Na raiz do projeto, entre na pasta frontend (SEM o ambiente virtual python)
+cd frontend
 
-# Instale os pacotes npm
+# Instale os pacotes
 npm install
 
-# Configure o endereço da API no arquivo .env do Vite
+# Configure o endereço da API
 echo "VITE_API_BASE_URL=http://127.0.0.1:8000/api" > .env
 ```
 
-### 6. Configuração de Shaders (Alta Performance)
+<!--
+### 4. Configuração de Shaders (Alta Performance)
 Para ativar o upscaling **Anime4K** (injetado automaticamente pelo `player.py`), você deve colocar os arquivos `.glsl` na pasta `shaders/` dentro da pasta `backend`.
 
 1. No terminal dentro da pasta backend execute `mkdir shaders` para criar a pasta
 
 2. Baixe os shaders oficiais do [Anime4K](https://github.com/bloc97/Anime4K/releases).
+-->
 
 ---
 
-## Execução
+### 🔧 Solução de Problemas (Troubleshooting)
+Caso enfrente erros ao iniciar o Frontend, verifique o seguinte:
+
+**Erro "npm: command not found" (Node.js não instalado):** O projeto precisa do Node.js (que já inclui o `npm`). A forma mais segura de instalar no Linux é via NVM. Rode os comandos abaixo:
+```bash
+# Baixa e instala o NVM
+curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh) | bash
+
+# Recarrega as configurações do terminal
+source ~/.bashrc
+
+# Instala o Node.js na versão 22 (ideal para o projeto)
+nvm install 22
+```
+
+**Erro de versão do Node (CustomEvent is not defined):** O Vite exige versões recentes do Node (20.19+ ou 22+). Se o seu Node for muito antigo e você já usa o NVM, basta atualizar: `nvm install 22` e depois `nvm use 22`.
+
+**Erro de Binding Nativo (Cannot find native binding):** Ocorre ao atualizar a versão do Node.js com dependências antigas instaladas. Para resolver, vá até a pasta `frontend` e rode:
+
+```bash
+rm -rf node_modules package-lock.json
+npm cache clean --force
+npm install
+```
+
+---
+
+## ▶️ Execução
 
 ### 1. Execução na IDE
 Para iniciar o sistema no terminal de uma IDE, você precisará de dois terminais ativos para rodar o projeto:
 
-Terminal 1 (Backend - FastAPI) COM Ambiente Virtual:
-```bash
-# Ative o Ambiente Virtual se ainda nao estiver ativo
-source venv/bin/activate
-# Entre na pasta backend 
-cd Slime_Shell_Web/backend
-
-# Execute
-uvicorn main_api:app --reload
-```
-
-Terminal 2 (Frontend - React) SEM Ambiente Virtual:
-```bash
-# Entre na pasta frontend
-cd Slime_Shell_Web/frontend
-
-# Execute
-npm run dev --force
-```
-Acesse o sistema no seu navegador através de: http://localhost:5173
+* **Terminal 1 (Backend):** Na pasta `backend` com o `slime_web_virtual` ativo, rode: `uvicorn main_api:app --reload`
+* **Terminal 2 (Frontend):** Na pasta `frontend`, rode: `npm run dev`
+* Acesse `http://localhost:5173` no navegador.
 
 
 ### 2. Execução em qualquer terminal
 Para iniciar o sistema em qualquer terminal com um comando siga os passos abaixo:
 
-1. Crie o arquivo executável na sua pasta de binários locais:
-```bash
-sudo nano /usr/local/bin/slimeWEB
-```
-
-2. Cole o script abaixo no arquivo slimeWEB criado. Atenção: Lembre-se de alterar a variável PROJECT_DIR para o caminho exato de onde você clonou o projeto na sua máquina:
+* Crie o arquivo executável: `sudo nano /usr/local/bin/slimeWEB`
+* Cole o script abaixo no arquivo slimeWEB criado. **Atenção:** Lembre-se de alterar a variável **PROJECT_DIR** para o caminho exato de onde você clonou o projeto na sua máquina:
 ```bash
 #!/bin/bash
 
@@ -170,7 +172,7 @@ PROJECT_DIR="/caminho/para/seu/Slime_Shell_Web"
 
 # 1. Liga o Backend
 cd $PROJECT_DIR
-source venv/bin/activate
+source slime_web_virtual/bin/activate
 cd $PROJECT_DIR/backend
 uvicorn main_api:app --host 127.0.0.1 --port 8000 &
 PID_PYTHON=$!
@@ -190,15 +192,9 @@ trap "echo -e '\n Desligando servidores...'; kill $PID_PYTHON $PID_NODE; exit" I
 wait
 ```
 
-3. Dê permissão de execução ao script:
-```bash
-sudo chmod +x /usr/local/bin/slimeWEB
-```
+* Dê permissão de execução ao script: `sudo chmod +x /usr/local/bin/slimeWEB`
 
-4. Agora, basta abrir qualquer terminal no seu computador e digitar:
-```bash
-slimeWEB
-```
+* Agora, basta abrir qualquer terminal no seu computador e digitar: `slimeWEB`
 
 ---
 
