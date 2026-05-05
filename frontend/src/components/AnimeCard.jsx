@@ -49,8 +49,8 @@ export default function AnimeCard({ anime, index, onSelect }) {
   }, [tituloExibicaoLimpo, coverUrl, index]);
 
   return (
-    <div onClick={() => onSelect({ ...anime, poster: coverUrl, cover: coverUrl })} className="bg-surface rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(0,255,255,0.05)] hover:-translate-y-1 cursor-pointer group flex flex-col h-[400px]">      
-      <div className="relative h-[280px] w-full bg-background flex items-center justify-center overflow-hidden shrink-0">
+    <div onClick={() => onSelect({ ...anime, poster: coverUrl, cover: coverUrl })} className="bg-surface rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_8px_16px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(0,255,255,0.05)] hover:-translate-y-1 cursor-pointer group flex flex-col h-full sm:h-[350px] 2xl:h-[400px]">      
+      <div className="relative h-[200px] sm:h-[230px] 2xl:h-[280px] w-full bg-background flex items-center justify-center overflow-hidden shrink-0">
         {coverUrl ? (
           <img 
             src={coverUrl} 
@@ -78,7 +78,7 @@ export default function AnimeCard({ anime, index, onSelect }) {
 
         <h3 
           title={tituloExibicaoLimpo}
-          className="text-sm font-bold text-textPrimary group-hover:text-cyanNeon transition-colors line-clamp-3 leading-snug"
+          className="text-sm font-bold text-textPrimary group-hover:text-cyanNeon transition-colors line-clamp-2 leading-snug"
         >
           {tituloExibicaoLimpo}
         </h3>

@@ -615,7 +615,7 @@ function App() {
       </header>
 
       {showBanner && (
-        <div className="relative w-full h-[50vh] md:h-[60vh] flex-shrink-0 flex items-end overflow-hidden perspective-1000 bg-background group">
+        <div className="relative w-full h-[50vh] md:h-[60vh] min-h-[450px] 2xl:min-h-0 flex-shrink-0 flex items-end overflow-hidden perspective-1000 bg-background group">
           <img
             src="/banner-slime3.jpg"
             alt="Background Slime"
@@ -630,7 +630,7 @@ function App() {
                 Protocolo: Rimuru_Tempest.sys
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)] mb-2 tracking-tighter group-hover:text-cyanNeon transition-colors duration-500 italic">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl font-black text-white drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)] mb-2 tracking-tighter group-hover:text-cyanNeon transition-colors duration-500 italic">
               Tensei shitara Slime Datta Ken
             </h1>
             <div className="mt-2 flex flex-col items-start gap-3 max-w-4xl backdrop-blur-[2px] rounded p-1 pb-8">
@@ -722,7 +722,7 @@ function App() {
                         <div
                           key={i}
                           onClick={() => handleQuickPlay(item)}
-                          className={`group bg-surface border rounded-xl flex flex-col overflow-hidden isolate transition-all duration-300 cursor-pointer relative shrink-0 snap-start w-[85vw] sm:w-[280px] lg:w-[400px]
+                          className={`group bg-surface border rounded-xl flex flex-col overflow-hidden isolate transition-all duration-300 cursor-pointer relative shrink-0 snap-start w-[85vw] sm:w-[280px] lg:w-[320px] 2xl:w-[400px]
                           ${(quickPlaying === item.titulo || openingHistory === item.titulo)
                               ? 'border-cyanNeon shadow-[0_0_20px_rgba(0,255,255,0.4)] animate-pulse'
                               : isLancamento
@@ -862,11 +862,24 @@ function App() {
                 <span>Lançamentos da Temporada</span>
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-6 w-full pb-12">
-                {displayedReleases.map((anime, i) => (
-                  <AnimeCard key={anime.titulo_exibicao + i} anime={anime} index={i} onSelect={(a) => {
-                    executarBusca(a.titulo_romaji || a.titulo_exibicao);
-                  }} />
-                ))}
+                {displayedReleases.map((anime, i) => {
+                  
+                  // A mágica: Esconde os animes que passariam da 2ª linha dependendo da tela
+                  let displayClass = "h-full"; // Os 4 primeiros (índice 0 a 3) aparecem em todas as telas
+                  if (i >= 4 && i < 6) displayClass = "hidden sm:block h-full";     // Mostra a partir do Tablet (6 itens)
+                  else if (i >= 6 && i < 8) displayClass = "hidden md:block h-full"; // Mostra a partir do Notebook (8 itens)
+                  else if (i >= 8 && i < 10) displayClass = "hidden lg:block h-full"; // 10 itens
+                  else if (i >= 10 && i < 12) displayClass = "hidden xl:block h-full"; // 12 itens
+                  else if (i >= 12) displayClass = "hidden 2xl:block h-full";          // Mostra os 14 no seu monitor Padrão
+
+                  return (
+                    <div key={anime.titulo_exibicao + i} className={displayClass}>
+                      <AnimeCard anime={anime} index={i} onSelect={(a) => {
+                        executarBusca(a.titulo_romaji || a.titulo_exibicao);
+                      }} />
+                    </div>
+                  );
+                })}
               </div>
             </section>
 
@@ -897,7 +910,7 @@ function App() {
 
                       return (
                         <div key={i} onClick={() => handleHistoryClick(item)} className="group bg-surface rounded-xl flex flex-col overflow-hidden opacity-85 hover:opacity-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer hover:shadow-[0_8px_16px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(0,255,255,0.05)] w-full h-full">
-                          <div className="relative w-full h-[280px] bg-background overflow-hidden shrink-0">
+                          <div className="relative w-full h-[200px] sm:h-[230px] 2xl:h-[280px] bg-background overflow-hidden shrink-0">
                             <img src={imgHistory} alt={item.titulo} className="w-full h-full object-cover object-center grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-transform duration-500" />
                           </div>
                           <div className="p-4 flex flex-col flex-1 bg-surface">
@@ -941,7 +954,7 @@ function App() {
 
                         return (
                           <div key={i} onClick={() => handleHistoryClick(item)} className="group bg-surface border-none rounded-xl flex flex-col overflow-hidden opacity-85 hover:opacity-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer hover:shadow-[0_8px_16px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(0,255,255,0.05)] shrink-0 snap-start w-[calc(50%-12px)] sm:w-[calc(33.33%-16px)] md:w-[calc(25%-18px)] lg:w-[calc(20%-19.2px)] xl:w-[calc(16.66%-20px)] 2xl:w-[calc(14.28%-20.5px)]">
-                            <div className="relative w-full h-[280px] bg-background overflow-hidden shrink-0">
+                            <div className="relative w-full h-[200px] sm:h-[230px] 2xl:h-[280px] bg-background overflow-hidden shrink-0">
                               <img src={imgHistory} alt={item.titulo} className="w-full h-full object-cover object-center grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-transform duration-500" />
                               
                               <div className={`absolute inset-0 flex items-center justify-center transition-opacity z-20 ${openingHistory === item.titulo ? 'opacity-100 bg-background/50' : 'opacity-0 pointer-events-none'}`}>

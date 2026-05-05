@@ -180,7 +180,7 @@ export default function EpisodeScreen({ anime, onBack }) {
 
       {/* === BANNER IMERSIVO & 3D FALLBACK === */}
       {/* O [perspective:2000px] cria a "câmera" 3D para os elementos filhos */}
-      <div className="relative w-full h-[50vh] md:h-[65vh] flex-shrink-0 flex items-center overflow-hidden border-none bg-background [perspective:2000px]">
+      <div className={`relative w-full flex-shrink-0 flex items-center overflow-hidden border-none bg-background [perspective:2000px] ${isExpanded ? 'min-h-[50vh] md:min-h-[65vh] h-auto py-16 md:pb-20 2xl:h-[65vh] 2xl:py-0' : 'min-h-[50vh] md:min-h-[65vh] h-auto py-16 md:pb-20 2xl:h-[65vh] 2xl:pb-0'}`}>
 
         {/* FUNDO: Blur Extremo se for Fallback, ou Limpo se for Banner Oficial */}
         {fundoExibicao && (
@@ -194,31 +194,30 @@ export default function EpisodeScreen({ anime, onBack }) {
         {/* DEGRADÊS PARA INTEGRAR O FUNDO AO SITE */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-1" />
         <div className={`absolute inset-0 z-1 ${isFallbackBanner ? 'bg-gradient-to-r from-background/80 via-background/20 to-transparent' : 'bg-gradient-to-r from-background via-background/60 to-transparent md:w-2/3'}`} />
-        <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-2" />
+        <div className="absolute bottom-0 w-full h-48 md:h-64 bg-gradient-to-t from-background via-background/95 to-transparent z-2" />
 
         {/* CONTAINER DO CONTEÚDO COM [transform-style:preserve-3d] */}
-        <div className="relative z-10 w-full px-8 md:px-12 md:pl-24 flex flex-col md:flex-row items-center justify-start gap-12 mt-12 [transform-style:preserve-3d]">
+        <div className="relative z-10 w-full px-8 md:px-12 md:pl-24 flex flex-col md:flex-row items-start justify-start gap-12 mt-12 [transform-style:preserve-3d]">
 
           {/* PÔSTER 3D */}
           {posterExibicao && (
-            <div className="hidden md:block shrink-0 transition-all duration-1000 ease-out group w-56 lg:w-64">
+            <div className="hidden md:block shrink-0 transition-all duration-1000 ease-out group w-56 lg:w-64 h-[320px] lg:h-[360px]">
               <img
                 src={posterExibicao}
                 alt="Poster"
-                className="w-full h-full object-cover rounded-xl border border-cyanNeon/40 shadow-[20px_20px_60px_rgba(0,0,0,0.9),0_0_30px_rgba(0,255,255,0.2)]"
+                className="w-full h-full object-cover rounded-xl border border-white/10 p-1 shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(0,255,255,0.05)]"
               />
-            </div>
+          </div>
           )}
 
           {/* INFORMAÇÕES (TÍTULO E SINOPSE) - VIDRO HOLOGRÁFICO SE FOR FALLBACK */}
           <div className={`flex-1 w-full max-w-6xl flex flex-col transition-all duration-1000 ease-out ${isExpanded ? 'min-h-[320px] lg:min-h-[360px]' : 'h-[320px] lg:h-[360px] overflow-hidden'} bg-black/30 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(0,255,255,0.05)] [transform:translateZ(60px)] hover:[transform:translateZ(80px)]`}>
-            
             {/* 2. Adicionado 'shrink-0' para a fonte e o título não serem espremidos */}
             <span className="inline-block self-start shrink-0 px-3 py-1 mb-4 border border-cyanNeon/50 bg-cyanNeon/10 text-cyanNeon text-[10px] font-bold tracking-widest uppercase rounded shadow-[0_0_10px_rgba(0,255,255,0.1)]">
               FONTE: {anime.fonte}
             </span>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)] leading-tight tracking-tighter italic shrink-0">
+            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-black text-white drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)] leading-tight tracking-tighter italic shrink-0 ${isExpanded ? '' : 'line-clamp-2'}`}>
               {tituloExibicaoLimpo}
             </h1>
 
@@ -232,7 +231,7 @@ export default function EpisodeScreen({ anime, onBack }) {
             {/* 4. Container dos Botões SEPARADO: Adicionado 'mt-auto' e 'shrink-0' para ancorar no fundo com espaçamento perfeito */}
             <div className="flex flex-wrap items-center gap-6 mt-auto pt-4 shrink-0">
               <button onClick={() => setIsExpanded(!isExpanded)} className="text-[10px] uppercase tracking-widest text-cyanNeon hover:text-white font-bold transition-colors">
-                {isExpanded ? '[-] Retrair Card' : '[+] Expandir Dados'}
+                {isExpanded ? '[-] Ler Menos' : '[+] Ler Mais'}
               </button>
               <button onClick={() => setShowTranslated(!showTranslated)} className="text-[10px] uppercase tracking-widest text-textSecondary hover:text-cyanNeon font-bold flex items-center gap-1 transition-colors">
                 {showTranslated ? '➔ Ver Original (Inglês)' : '➔ Usar Tradução (PT-BR)'}
@@ -242,7 +241,7 @@ export default function EpisodeScreen({ anime, onBack }) {
         </div>
       </div>
 
-      <div className="w-full px-8 md:px-12 md:pl-24 py-8 relative z-20">
+      <div className={`w-full px-8 md:px-12 md:pl-24 pb-8 relative z-20 transition-all duration-700 ${isExpanded ? 'pt-4 md:pt-10' : 'pt-8 md:pt-10'}`}>
         <h3 className="text-2xl font-bold text-textPrimary mb-8 border-l-4 border-cyanNeon pl-4">
           Episódios Disponíveis
         </h3>
