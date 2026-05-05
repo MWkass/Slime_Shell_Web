@@ -92,7 +92,7 @@ pip install -r requirements.txt
 # Configuração de variáveis de ambiente
 cd backend
 echo "IMGBB_API_KEY=sua_chave_aqui" > .env
-echo "PASTA_SCREENSHOTS=./screenshots" > .env
+echo "PASTA_SCREENSHOTS=./screenshots" >> .env
 ```
 
 ### 3. Configuração do Frontend (Node/React)
